@@ -39,7 +39,7 @@ const timeline = [
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Jeff & Deb just got married! Follow along as they celebrate love and craft their next chapter in music." />
     <meta name="generator" content={Astro.generator} />
@@ -258,11 +258,16 @@ const timeline = [
         line-height: 1.5;
       }
 
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
-      }
+       .gallery {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: center;
+         gap: 1.5rem;
+       }
+
+       .gallery figure {
+         flex: 0 0 240px;
+       }
 
       .gallery figure {
         margin: 0;
@@ -519,7 +524,7 @@ const timeline = [
     </header>
 
     <section id="gallery">
-      <h2 class="section-heading">Moments from the aisle.</h2>
+      <h2 class="section-heading" style="text-align: center;">Moments from the aisle.</h2>
       <div class="gallery">
           {gallery.map((image, index) => (
             <figure data-index={index}>
