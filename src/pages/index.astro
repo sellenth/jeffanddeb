@@ -352,16 +352,84 @@ const timeline = [
         object-fit: contain;
       }
 
-      .newsletter {
-        background: rgba(255, 255, 255, 0.78);
-        border-radius: 32px;
-        padding: clamp(2rem, 4vw, 3rem);
-        box-shadow: var(--shadow-soft);
-        border: 1px solid var(--border-soft);
-        display: grid;
-        gap: 1.5rem;
-        justify-items: start;
-      }
+       .preview-music {
+         display: grid;
+         gap: 1.5rem;
+         justify-items: center;
+       }
+
+       .preview-music > div:first-child {
+         text-align: center;
+       }
+
+       .track-selector {
+         display: flex;
+         gap: 0.75rem;
+         flex-wrap: wrap;
+       }
+
+       .track-btn {
+         padding: 0.5rem 1rem;
+         border-radius: 999px;
+         border: 1px solid var(--border-soft);
+         background: rgba(255, 255, 255, 0.7);
+         color: var(--accent);
+         font-size: 0.9rem;
+         font-weight: 500;
+         cursor: pointer;
+         transition: all 150ms ease;
+       }
+
+       .track-btn:hover {
+         background: var(--accent);
+         color: #fff;
+         transform: translateY(-1px);
+       }
+
+       .track-btn.active {
+         background: var(--accent);
+         color: #fff;
+         box-shadow: var(--shadow-soft);
+       }
+
+       .download-btn {
+         display: inline-block;
+         padding: 0.75rem 1.5rem;
+         border-radius: 999px;
+         border: 1px solid var(--accent);
+         background: var(--accent);
+         color: #fff;
+         font-size: 0.9rem;
+         font-weight: 600;
+         text-decoration: none;
+         box-shadow: var(--shadow-soft);
+         transition: all 150ms ease;
+         text-align: center;
+       }
+
+       .download-btn:hover {
+         background: rgba(106, 92, 246, 0.9);
+         transform: translateY(-2px);
+       }
+
+       .preview-music audio {
+         border-radius: 24px;
+         background: rgba(255, 255, 255, 0.78);
+         border: 1px solid var(--border-soft);
+         box-shadow: var(--shadow-soft);
+         padding: 0.5rem;
+       }
+
+       .newsletter {
+         background: rgba(255, 255, 255, 0.78);
+         border-radius: 32px;
+         padding: clamp(2rem, 4vw, 3rem);
+         box-shadow: var(--shadow-soft);
+         border: 1px solid var(--border-soft);
+         display: grid;
+         gap: 1.5rem;
+         justify-items: start;
+       }
 
       .newsletter form {
         display: flex;
@@ -446,19 +514,11 @@ const timeline = [
       <div class="hero-content">
         <div>
           <h1>Jeff & Deb are married — and the encore is just beginning.</h1>
-          <p>
-            Yesterday we celebrated a wedding. Tomorrow we invite you into the songs that scored our love story. Follow along as we blend vows and verses into something new.
-          </p>
-          <div class="cta-row">
-            <a class="cta primary" href="#music">Preview the music</a>
-            <a class="cta secondary" href="#gallery">See the day</a>
-          </div>
         </div>
       </div>
     </header>
 
     <section id="gallery">
-      <span class="pill-title">Yesterday in color</span>
       <h2 class="section-heading">Moments from the aisle.</h2>
       <div class="gallery">
           {gallery.map((image, index) => (
@@ -469,8 +529,28 @@ const timeline = [
       </div>
     </section>
 
-    <main>
-      <section class="newsletter" aria-labelledby="newsletter-heading">
+     <main>
+        <section class="preview-music" aria-labelledby="preview-heading">
+          <div>
+            <span class="pill-title">Preview</span>
+            <h2 class="section-heading" id="preview-heading">Our Music</h2>
+            <p class="section-copy">
+              Listen to a sneak peek of our upcoming tracks.
+            </p>
+          </div>
+          <div class="track-selector">
+            <button class="track-btn active" data-track="1">Track 1</button>
+            <button class="track-btn" data-track="2">Track 2</button>
+            <button class="track-btn" data-track="3">Track 3</button>
+          </div>
+          <audio id="preview-audio" controls style="width: 100%; max-width: 400px;">
+            <source id="audio-source" src="/music/example.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+          <a id="download-btn" href="/music/example.mp3" download class="download-btn">Download Track</a>
+        </section>
+
+       <section class="newsletter" aria-labelledby="newsletter-heading">
         <div>
           <span class="pill-title">Stay in the loop</span>
           <h2 class="section-heading" id="newsletter-heading">Hear the first notes.</h2>
@@ -478,7 +558,10 @@ const timeline = [
             Drop your email below and we&rsquo;ll send a personal note when the first demos hit the airwaves. No spam, just songs and stories from Jeff & Deb.
           </p>
         </div>
-        <form name="updates" method="post" netlify>
+        <form action="https://api.web3forms.com/submit" method="post">
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+          <input type="hidden" name="subject" value="New subscriber for Jeff & Deb updates" />
+          <input type="hidden" name="from_name" value="Jeff & Deb Website" />
           <label class="sr-only" for="email">Email</label>
           <input id="email" name="email" type="email" placeholder="you@example.com" required />
           <button type="submit">Notify me</button>
@@ -544,17 +627,43 @@ const timeline = [
         }
       });
 
-      document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('hidden')) {
-          if (e.key === 'Escape') {
-            lightbox.classList.add('hidden');
-          } else if (e.key === 'ArrowLeft') {
-            prevBtn.click();
-          } else if (e.key === 'ArrowRight') {
-            nextBtn.click();
-          }
-        }
-      });
-    </script>
+       document.addEventListener('keydown', (e) => {
+         if (!lightbox.classList.contains('hidden')) {
+           if (e.key === 'Escape') {
+             lightbox.classList.add('hidden');
+           } else if (e.key === 'ArrowLeft') {
+             prevBtn.click();
+           } else if (e.key === 'ArrowRight') {
+             nextBtn.click();
+           }
+         }
+       });
+
+        // Track selector functionality
+        const trackButtons = document.querySelectorAll('.track-btn');
+        const audioElement = document.getElementById('preview-audio');
+        const audioSource = document.getElementById('audio-source');
+        const downloadBtn = document.getElementById('download-btn');
+
+        // Load the default track on page load
+        audioElement.load();
+
+        trackButtons.forEach(button => {
+         button.addEventListener('click', () => {
+           // Remove active class from all buttons
+           trackButtons.forEach(btn => btn.classList.remove('active'));
+           // Add active class to clicked button
+           button.classList.add('active');
+
+           // Change audio source and download link
+           const trackNumber = button.dataset.track;
+           //const trackPath = `/music/track${trackNumber}.mp3`;
+           const trackPath = `/music/example.mp3`;
+           audioSource.src = trackPath;
+           downloadBtn.href = trackPath;
+           audioElement.load();
+         });
+       });
+     </script>
   </body>
 </html>
