@@ -9,45 +9,21 @@ const gallery = [
     alt: 'Jeff and Deb wedding photo 2'
   },
   {
-    src: '/images/wedding/IMG_0977.webp',
-    alt: 'Jeff and Deb wedding photo 3'
-  },
-  {
     src: '/images/wedding/IMG_0978.webp',
     alt: 'Jeff and Deb wedding photo 4'
-  },
-  {
-    src: '/images/wedding/IMG_0979.webp',
-    alt: 'Jeff and Deb wedding photo 5'
   },
   {
     src: '/images/wedding/IMG_0980.webp',
     alt: 'Jeff and Deb wedding photo 6'
   },
   {
-    src: '/images/wedding/IMG_4645.webp',
-    alt: 'Jeff and Deb wedding photo 7'
-  },
-  {
     src: '/images/wedding/IMG_4646.webp',
     alt: 'Jeff and Deb wedding photo 8'
-  },
-  {
-    src: '/images/wedding/IMG_4649.webp',
-    alt: 'Jeff and Deb wedding photo 9'
   },
   {
     src: '/images/wedding/IMG_4651.webp',
     alt: 'Jeff and Deb wedding photo 10'
   },
-  {
-    src: '/images/wedding/IMG_4652.webp',
-    alt: 'Jeff and Deb wedding photo 11'
-  },
-  {
-    src: '/images/wedding/IMG_4655.webp',
-    alt: 'Jeff and Deb wedding photo 12'
-  }
 ];
 
 const timeline = [
@@ -57,16 +33,6 @@ const timeline = [
     blurb:
       "We said our vows surrounded by family, friends, and the songs that brought us together."
   },
-  {
-    headline: 'Soft Launch',
-    detail: 'Later this Summer',
-    blurb: 'Sharing the first acoustic sessions recorded as newlyweds – intimate, honest, and full of harmony.'
-  },
-  {
-    headline: 'Full Release',
-    detail: 'Fall 2024',
-    blurb: 'Debut EP streaming everywhere with stories from the aisle to the studio.'
-  }
 ];
 ---
 
@@ -327,6 +293,65 @@ const timeline = [
         text-transform: uppercase;
       }
 
+      #gallery {
+        padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 8vw, 7rem);
+      }
+
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .lightbox.hidden {
+        display: none;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 2rem;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      .prev {
+        left: 20px;
+      }
+
+      .next {
+        right: 20px;
+      }
+
+      #lightbox-img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+
       .newsletter {
         background: rgba(255, 255, 255, 0.78);
         border-radius: 32px;
@@ -419,10 +444,6 @@ const timeline = [
   <body>
     <header class="hero">
       <div class="hero-content">
-        <div class="brand">
-          <img src="/images/logo.svg" alt="Jeff and Deb monogram logo" loading="lazy" />
-          <span>Newlywed Duo</span>
-        </div>
         <div>
           <h1>Jeff & Deb are married — and the encore is just beginning.</h1>
           <p>
@@ -436,42 +457,19 @@ const timeline = [
       </div>
     </header>
 
-    <main>
-      <section id="story">
-        <span class="pill-title">Harmony in real time</span>
-        <h2 class="section-heading">A wedding, a duo, and a fresh creative chapter.</h2>
-        <p class="section-copy">
-          Jeff and Deb have written together for years, but yesterday was the biggest collaboration yet. The plan: soak in every newlywed moment, then head back into the studio with hearts full and notebooks messy. This space will chronicle everything from honeymoon voice memos to fully produced tracks.
-        </p>
-      </section>
-
-      <section id="music">
-        <span class="pill-title">What&rsquo;s next</span>
-        <h2 class="section-heading">Love songs in three acts.</h2>
-        <div class="cards">
-          {timeline.map((item) => (
-            <article class="card">
-              <span>{item.detail}</span>
-              <h3>{item.headline}</h3>
-              <p>{item.blurb}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="gallery">
-        <span class="pill-title">Yesterday in color</span>
-        <h2 class="section-heading">Moments from the aisle.</h2>
-        <div class="gallery">
+    <section id="gallery">
+      <span class="pill-title">Yesterday in color</span>
+      <h2 class="section-heading">Moments from the aisle.</h2>
+      <div class="gallery">
           {gallery.map((image, index) => (
-            <figure>
+            <figure data-index={index}>
               <img src={image.src} alt={image.alt} loading="lazy" />
-              <figcaption>Frame {String(index + 1).padStart(2, '0')}</figcaption>
             </figure>
           ))}
-        </div>
-      </section>
+      </div>
+    </section>
 
+    <main>
       <section class="newsletter" aria-labelledby="newsletter-heading">
         <div>
           <span class="pill-title">Stay in the loop</span>
@@ -493,7 +491,70 @@ const timeline = [
 
     <footer>
       <span>&copy; {new Date().getFullYear()} Jeff & Deb. Love first, music next.</span>
-      <a href="mailto:hello@jeffanddeb.com">hello@jeffanddeb.com</a>
     </footer>
+
+    <div id="lightbox" class="lightbox hidden">
+      <button id="close-lightbox" class="close-btn">&times;</button>
+      <button id="prev-lightbox" class="nav-btn prev">&larr;</button>
+      <img id="lightbox-img" alt="" />
+      <button id="next-lightbox" class="nav-btn next">&rarr;</button>
+    </div>
+
+    <script>
+      const galleryFigures = document.querySelectorAll('.gallery figure');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('close-lightbox');
+      const prevBtn = document.getElementById('prev-lightbox');
+      const nextBtn = document.getElementById('next-lightbox');
+
+      let currentIndex = 0;
+
+      galleryFigures.forEach((fig, index) => {
+        fig.addEventListener('click', () => {
+          currentIndex = index;
+          showImage();
+        });
+      });
+
+      function showImage() {
+        const img = galleryFigures[currentIndex].querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.remove('hidden');
+      }
+
+      closeBtn.addEventListener('click', () => {
+        lightbox.classList.add('hidden');
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + galleryFigures.length) % galleryFigures.length;
+        showImage();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % galleryFigures.length;
+        showImage();
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.add('hidden');
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('hidden')) {
+          if (e.key === 'Escape') {
+            lightbox.classList.add('hidden');
+          } else if (e.key === 'ArrowLeft') {
+            prevBtn.click();
+          } else if (e.key === 'ArrowRight') {
+            nextBtn.click();
+          }
+        }
+      });
+    </script>
   </body>
 </html>
