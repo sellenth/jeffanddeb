@@ -1,0 +1,476 @@
+---
+const gallery = [
+  {
+    src: '/images/wedding/IMG_0976.webp',
+    alt: 'Jeff and Deb wedding photo 2'
+  },
+  {
+    src: '/images/wedding/IMG_0978.webp',
+    alt: 'Jeff and Deb wedding photo 4'
+  },
+  {
+    src: '/images/wedding/IMG_0980.webp',
+    alt: 'Jeff and Deb wedding photo 6'
+  },
+  {
+    src: '/images/wedding/IMG_4646.webp',
+    alt: 'Jeff and Deb wedding photo 8'
+  },
+  {
+    src: '/images/wedding/IMG_4651.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/1.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/2.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/3.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/4.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/5.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/6.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/7.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+  {
+    src: '/images/wedding/8.webp',
+    alt: 'Jeff and Deb wedding photo 10'
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Jeff & Deb wedding gallery - View all the moments from their special day." />
+    <meta name="generator" content={Astro.generator} />
+    <title>Wedding Gallery — Jeff & Deb</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --bg-gradient: radial-gradient(circle at top left, #fff4f7, #f4f8ff 45%, #f9f6ff);
+        --accent: #6a5cf6;
+        --accent-soft: rgba(106, 92, 246, 0.08);
+        --text-primary: #1f1a36;
+        --text-secondary: #544f6a;
+        --border-soft: rgba(106, 92, 246, 0.12);
+        --card-bg: rgba(255, 255, 255, 0.75);
+        --shadow-soft: 0 20px 45px rgba(34, 30, 84, 0.08);
+        background: var(--bg-gradient);
+        color: var(--text-primary);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-gradient);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .hero {
+        position: relative;
+        padding: clamp(3rem, 5vw, 6rem) clamp(1.5rem, 8vw, 7rem) clamp(3rem, 6vw, 5rem);
+        overflow: hidden;
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 1rem;
+        border-radius: 36px;
+        background: linear-gradient(140deg, rgba(255, 193, 218, 0.45), rgba(114, 234, 255, 0.35));
+        filter: blur(70px);
+        z-index: 0;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+        display: grid;
+        gap: clamp(2rem, 4vw, 4rem);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 1.25rem;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 999px;
+        border: 1px solid var(--border-soft);
+        max-width: fit-content;
+        backdrop-filter: blur(12px);
+      }
+
+      .brand img {
+        height: 48px;
+        width: auto;
+        object-fit: contain;
+      }
+
+      .brand span {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      .hero h1 {
+        font-family: 'Playfair Display', 'Times New Roman', serif;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        margin: 0;
+        line-height: 1.05;
+      }
+
+      .hero p {
+        margin: 1.5rem 0 2rem;
+        font-size: clamp(1rem, 2.2vw, 1.25rem);
+        max-width: 48ch;
+        line-height: 1.6;
+        color: var(--text-secondary);
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 1.75rem;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: transform 150ms ease, box-shadow 150ms ease;
+        border: 1px solid transparent;
+      }
+
+      .cta.primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .cta.secondary {
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--accent);
+        border-color: var(--border-soft);
+      }
+
+      .cta:hover {
+        transform: translateY(-2px);
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(3rem, 5vw, 5rem);
+        padding: clamp(2.5rem, 6vw, 6rem) clamp(1.5rem, 8vw, 7rem) clamp(4rem, 8vw, 8rem);
+      }
+
+      section {
+        display: grid;
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+      }
+
+      .pill-title {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .section-heading {
+        font-family: 'Playfair Display', 'Times New Roman', serif;
+        font-size: clamp(2rem, 3.8vw, 3rem);
+        margin: 0;
+      }
+
+      .section-copy {
+        margin: 0;
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+
+      .gallery figure {
+        flex: 0 0 240px;
+        margin: 0;
+        border-radius: 28px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid var(--border-soft);
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      .gallery img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      .gallery figcaption {
+        position: absolute;
+        inset: auto 1rem 1rem 1rem;
+        padding: 0.65rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(31, 26, 54, 0.65);
+        color: #fff;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      #gallery {
+        padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 8vw, 7rem);
+      }
+
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .lightbox.hidden {
+        display: none;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 2rem;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      .prev {
+        left: 20px;
+      }
+
+      .next {
+        right: 20px;
+      }
+
+      #lightbox-img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+
+      footer {
+        padding: 2rem clamp(1.5rem, 8vw, 7rem) 3rem;
+        border-top: 1px solid var(--border-soft);
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      footer a {
+        color: inherit;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      @media (max-width: 720px) {
+        .brand {
+          padding: 0.65rem 1rem;
+        }
+
+        .brand img {
+          height: 40px;
+        }
+
+        .cta-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .cta {
+          justify-content: center;
+          width: 100%;
+        }
+
+        footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-content">
+        <div>
+          <a href="/" class="brand">
+            <span>Jeff & Deb</span>
+          </a>
+          <h1>Gallery</h1>
+        </div>
+      </div>
+    </header>
+
+    <section id="gallery">
+      <div class="gallery">
+          {gallery.map((image, index) => (
+            <figure data-index={index}>
+              <img src={image.src} alt={image.alt} loading="lazy" />
+            </figure>
+          ))}
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; {new Date().getFullYear()} Jeff & Deb. Love first, music next.</span>
+      <a href="/">← Back to Home</a>
+    </footer>
+
+    <div id="lightbox" class="lightbox hidden">
+      <button id="close-lightbox" class="close-btn">&times;</button>
+      <button id="prev-lightbox" class="nav-btn prev">&larr;</button>
+      <img id="lightbox-img" alt="" />
+      <button id="next-lightbox" class="nav-btn next">&rarr;</button>
+    </div>
+
+    <script>
+      const galleryFigures = document.querySelectorAll('.gallery figure');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('close-lightbox');
+      const prevBtn = document.getElementById('prev-lightbox');
+      const nextBtn = document.getElementById('next-lightbox');
+
+      let currentIndex = 0;
+
+      galleryFigures.forEach((fig, index) => {
+        fig.addEventListener('click', () => {
+          currentIndex = index;
+          showImage();
+        });
+      });
+
+      function showImage() {
+        const img = galleryFigures[currentIndex].querySelector('img');
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.remove('hidden');
+      }
+
+      closeBtn.addEventListener('click', () => {
+        lightbox.classList.add('hidden');
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + galleryFigures.length) % galleryFigures.length;
+        showImage();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % galleryFigures.length;
+        showImage();
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.add('hidden');
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('hidden')) {
+          if (e.key === 'Escape') {
+            lightbox.classList.add('hidden');
+          } else if (e.key === 'ArrowLeft') {
+            prevBtn.click();
+          } else if (e.key === 'ArrowRight') {
+            nextBtn.click();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
